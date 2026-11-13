@@ -40,7 +40,7 @@ export default {
                 targaryen: '#e54141',
                 thenightswatch: '#7a7a7a',
                 tyrell: '#509f16',
-                secondary: '#DA8A2A',
+                secondary: '#c9a24e',
                 military: '#c72229',
                 intrigue: '#05552f',
                 power: '#2a2e5e'
@@ -67,7 +67,17 @@ export default {
             themes: {
                 dark: {
                     colors: {
-                        primary: '#41658a',
+                        background: '#0f0d0b',
+                        foreground: '#ece3d0',
+                        content1: '#1a1612',
+                        content2: '#231d17',
+                        content3: '#2e261e',
+                        content4: '#3a3026',
+                        primary: {
+                            DEFAULT: '#8c6a2c',
+                            foreground: '#fdf6e3'
+                        },
+                        focus: '#c9a24e',
                         danger: '#dc3545',
                         ['danger-subtle']: {
                             DEFAULT: '#f8d7da',

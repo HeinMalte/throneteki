@@ -6,6 +6,8 @@ import 'jquery-validation';
 import 'jquery-validation-unobtrusive';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '@fontsource/cinzel/600.css';
+import '@fontsource/cinzel/700.css';
 import * as Sentry from '@sentry/browser';
 import * as SentryReact from '@sentry/react';
 import { createRoot } from 'react-dom/client';

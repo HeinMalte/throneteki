@@ -13,6 +13,7 @@ import GameSettings from '../Components/Profile/GameSettings';
 import BlankBg from '../assets/img/bgs/blank.webp';
 import Background1 from '../assets/img/bgs/background.webp';
 import Background2 from '../assets/img/bgs/background2.webp';
+import ThroneRoomBg from '../assets/img/bgs/throneroom.webp';
 import { setAuthTokens, setUser } from '../redux/reducers/auth';
 import { toast } from 'react-toastify';
 import CardSizeSettings from '../Components/Profile/CardSizeSettings';
@@ -22,7 +23,8 @@ import { keyboardShortcutsEnabled } from '../Components/GameBoard/keyboardShortc
 const backgrounds = [
     { name: 'none', label: 'None', imageUrl: BlankBg },
     { name: 'BG1', label: 'Standard', imageUrl: Background1 },
-    { name: 'BG2', label: 'Winter', imageUrl: Background2 }
+    { name: 'BG2', label: 'Winter', imageUrl: Background2 },
+    { name: 'GOT', label: 'Throne Room', imageUrl: ThroneRoomBg }
 ];
 
 const defaultActionWindows = {
@@ -41,7 +43,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const [selectedBackground, setSelectedBackground] = useState(
-        user?.settings.background || 'BG1'
+        user?.settings.background || 'GOT'
     );
 
     const [saveProfile, { isLoading: isSaveLoading, error: saveError }] = useSaveProfileMutation();
@@ -62,7 +64,7 @@ const Profile = () => {
     }, [saveError]);
 
     useEffect(() => {
-        setSelectedBackground(user?.settings?.background || 'BG1');
+        setSelectedBackground(user?.settings?.background || 'GOT');
     }, [user?.settings?.background, user?.settings?.cardSize]);
 
     if (!user) {

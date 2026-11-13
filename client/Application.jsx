@@ -10,10 +10,10 @@ import { useVerifyAuthenticationQuery } from './redux/middleware/api';
 import { setAuthTokens, setUser } from './redux/reducers/auth';
 import { startConnecting } from './redux/reducers/lobby';
 import { navigate } from './redux/reducers/navigation';
-import Background from './assets/img/bgs/mainbg.webp';
 import BlankBg from './assets/img/bgs/blank.webp';
 import StandardBg from './assets/img/bgs/background.webp';
 import WinterBg from './assets/img/bgs/background2.webp';
+import ThroneRoomBg from './assets/img/bgs/throneroom.webp';
 import LoadingSpinner from './Components/Site/LoadingSpinner';
 import CardHover from './Components/Images/CardHover';
 import ErrorMessage from './Components/Site/ErrorMessage';
@@ -23,7 +23,8 @@ import PendingGameAlerter from './Components/Games/PendingGameAlerter';
 const backgrounds = {
     none: BlankBg,
     BG1: StandardBg,
-    BG2: WinterBg
+    BG2: WinterBg,
+    GOT: ThroneRoomBg
 };
 
 const Application = () => {
@@ -113,10 +114,10 @@ const Application = () => {
             if (bgRef.current && background === 'custom' && settings.customBackgroundUrl) {
                 bgRef.current.style.backgroundImage = `url('/img/bgs/${settings.customBackgroundUrl}')`;
             } else if (bgRef.current) {
-                bgRef.current.style.backgroundImage = `url('${backgrounds[background]}')`;
+                bgRef.current.style.backgroundImage = `url('${backgrounds[background] || ThroneRoomBg}')`;
             }
         } else if (bgRef.current) {
-            bgRef.current.style.backgroundImage = `url('${Background}')`;
+            bgRef.current.style.backgroundImage = `url('${ThroneRoomBg}')`;
         }
     }, [gameBoardVisible, user]);
 

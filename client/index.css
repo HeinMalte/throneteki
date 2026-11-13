@@ -84,3 +84,23 @@ body {
         transform: none;
     }
 }
+
+h1,
+h2,
+h3,
+nav,
+.got-heading {
+    font-family: 'Cinzel', Georgia, serif;
+    letter-spacing: 0.03em;
+}
+
+nav {
+    border-bottom: 1px solid rgba(201, 162, 78, 0.45);
+}
+
+.got-card-text {
+    background: linear-gradient(180deg, #f1e6c9 0%, #e2d2a8 100%);
+    border: 1px solid #8c6a2c;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+    color: #1c150c;
+}

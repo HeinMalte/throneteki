@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import CardImage from './CardImage';
+import CardTextDe from './CardTextDe';
 import { Spinner } from '@heroui/react';
 import { CardHoverContext } from './CardHoverContext';
 import classNames from 'classnames';
@@ -124,6 +125,7 @@ const CardHover = ({ children, size = '3x-large' }) => {
                                 }}
                                 disableSkeleton={true}
                             />
+                            {!isLoading && <CardTextDe code={code} />}
                         </div>
                     </div>,
                     document.querySelector('[data-overlay-container="true"]')
