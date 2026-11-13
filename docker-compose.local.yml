@@ -1,0 +1,60 @@
+# Local test setup: database, redis, lobby and one game node with a single command.
+#   docker compose -f docker-compose.local.yml up --build
+# Then open http://localhost:4000
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: throneteki
+      POSTGRES_PASSWORD: throneteki
+      POSTGRES_DB: throneteki
+    volumes:
+      - postgres-local:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U throneteki"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7
+
+  lobby:
+    build:
+      context: .
+    image: got-arena:local
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      NODE_CONFIG: '{"env":"production","secret":"${GOT_SECRET:-lokal-nur-zum-testen-1}","hmacSecret":"${GOT_HMAC_SECRET:-lokal-nur-zum-testen-2}","origin":"http://localhost:4000","redisKeyPrefix":"local"}'
+    command: >
+      sh -c "node server/db/migrate.js up &&
+             node server/scripts/fetchdata.js --image-source none &&
+             node server/scripts/importstandalonedecks.js &&
+             node ."
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./public/img/cards:/usr/src/app/public/img/cards
+
+  gamenode:
+    build:
+      context: .
+    image: got-arena:local
+    depends_on:
+      - lobby
+    environment:
+      NODE_ENV: development
+      PORT: "9500"
+      SERVER: node1
+      NODE_CONFIG: '{"secret":"${GOT_SECRET:-lokal-nur-zum-testen-1}","hmacSecret":"${GOT_HMAC_SECRET:-lokal-nur-zum-testen-2}","origin":"http://localhost:4000","redisKeyPrefix":"local"}'
+    command: node server/gamenode
+    ports:
+      - "9500:9500"
+
+volumes:
+  postgres-local:
