@@ -1,4 +1,5 @@
 import React from 'react';
+import { cardLabelDe } from '../../cardNamesDe';
 import classNames from 'classnames';
 import { Avatar, Link } from '@heroui/react';
 
@@ -103,7 +104,7 @@ const Messages = ({ messages }) => {
             } else if (fragment.code && fragment.label) {
                 messages.push(
                     <span key={index++} className='cursor-pointer text-secondary hover:text-info'>
-                        <CardHoverable code={fragment.code}>{fragment.label}</CardHoverable>
+                        <CardHoverable code={fragment.code}>{cardLabelDe(fragment)}</CardHoverable>
                     </span>
                 );
             } else if (fragment.name && fragment.argType === 'player') {

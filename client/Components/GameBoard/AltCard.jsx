@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { cardNameDe } from '../../cardNamesDe';
 import classNames from 'classnames';
 import { ThronesIcons } from '../../constants';
 
@@ -47,7 +48,7 @@ const AltCard = ({ card }) => {
                 )}
                 {['event', 'agenda'].includes(card.type) ? (
                     <div className='card-name'>
-                        {card.unique ? <span className='card-unique' /> : null} {card.name}
+                        {card.unique ? <span className='card-unique' /> : null} {cardNameDe(card)}
                     </div>
                 ) : (
                     <div className='card-name' />
@@ -81,7 +82,7 @@ const AltCard = ({ card }) => {
                 )}
                 {['character', 'location', 'plot'].includes(card.type) && (
                     <div className='card-name'>
-                        {card.unique ? <span className='card-unique' /> : null} {card.name}
+                        {card.unique ? <span className='card-unique' /> : null} {cardNameDe(card)}
                     </div>
                 )}
                 {['character', 'location', 'plot'].includes(card.type) && (
@@ -99,7 +100,7 @@ const AltCard = ({ card }) => {
                 {/* eslint-disable-line */}
                 {['attachment'].includes(card.type) && (
                     <div className='card-name'>
-                        {card.unique ? <span className='card-unique' /> : null} {card.name}
+                        {card.unique ? <span className='card-unique' /> : null} {cardNameDe(card)}
                     </div>
                 )}
             </div>

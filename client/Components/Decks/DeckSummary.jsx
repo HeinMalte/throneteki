@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { cardLabelDe, cardNameDe } from '../../cardNamesDe';
 import { useGetCardsQuery } from '../../redux/middleware/api';
 import { sortBy } from 'underscore';
 import CardHoverable from '../Images/CardHoverable';
@@ -60,15 +61,17 @@ const DeckSummary = ({ className, deck }) => {
                 </div>
             );
 
-            const sortedCards = sortBy(cards, (card) => card.card.name).map((card, index) => (
-                <CardHoverable key={index} code={card.card.code} type={card.card.type}>
-                    <div className='flex flex-row gap-1'>
-                        {`${card.count}x`}
-                        <ThronesIcon icon={type} color={card.card.faction} />
-                        <span>{card.card.label}</span>
-                    </div>
-                </CardHoverable>
-            ));
+            const sortedCards = sortBy(cards, (card) => cardNameDe(card.card)).map(
+                (card, index) => (
+                    <CardHoverable key={index} code={card.card.code} type={card.card.type}>
+                        <div className='flex flex-row gap-1'>
+                            {`${card.count}x`}
+                            <ThronesIcon icon={type} color={card.card.faction} />
+                            <span>{cardLabelDe(card.card)}</span>
+                        </div>
+                    </CardHoverable>
+                )
+            );
 
             return (
                 <div key={type} className='break-inside-avoid pt-1'>

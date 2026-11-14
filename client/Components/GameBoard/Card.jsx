@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { cardNameDe } from '../../cardNamesDe';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useDraggable } from '@dnd-kit/core';
@@ -377,7 +378,7 @@ const Card = ({
                 onClick={handleClick}
                 style={{ zIndex: cardStackIndex-- }}
             >
-                {card.name && <span className='absolute left-0 top-0'>{card.name}</span>}
+                {card.name && <span className='absolute left-0 top-0'>{cardNameDe(card)}</span>}
                 <CardImage
                     ref={setNodeRef}
                     className='absolute left-0 top-0 touch-none'

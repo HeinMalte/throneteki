@@ -1,4 +1,5 @@
 import React from 'react';
+import { cardLabelDe } from '../../cardNamesDe';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { validateDeck } from '../../../deck-helper';
@@ -307,7 +308,7 @@ class DraftDeckEditor extends React.Component {
             return (
                 <div key={card.code}>
                     <span key={card.code} className='card-link col-sm-10'>
-                        {card.label}
+                        {cardLabelDe(card)}
                     </span>
                     <span
                         className='glyphicon glyphicon-remove icon-danger btn col-sm-1'

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cardLabelDe } from '../../cardNamesDe';
 
 const CardLink = ({ card, onClick, onMouseOut, onMouseOver }) => {
     return (
@@ -8,7 +9,7 @@ const CardLink = ({ card, onClick, onMouseOut, onMouseOver }) => {
             onMouseOver={() => onMouseOver && onMouseOver(card)}
             onMouseOut={() => onMouseOut && onMouseOut(card)}
         >
-            {card.label}
+            {cardLabelDe(card)}
         </span>
     );
 };

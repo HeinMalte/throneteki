@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { cardLabelDe, matchesCardName } from '../../cardNamesDe';
 
 import { BannersForFaction, Constants } from '../../constants';
 import ReactTable from '../Table/ReactTable';
@@ -187,8 +188,9 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
     const columns = useMemo(
         () => [
             {
-                accessorFn: (row) => row.label,
+                accessorFn: (row) => cardLabelDe(row),
                 header: 'Name',
+                filterFn: (row, columnId, value) => matchesCardName(row.original, value),
                 cell: (info) => (
                     <CardHoverable code={info.row.original.code}>{info.getValue()}</CardHoverable>
                 ),

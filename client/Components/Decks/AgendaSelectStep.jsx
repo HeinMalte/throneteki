@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { cardLabelDe } from '../../cardNamesDe';
 import CardImage from '../Images/CardImage';
 import AlertPanel from '../Site/AlertPanel';
 import { Button } from '@heroui/react';
@@ -16,7 +17,7 @@ const AgendaSelectStep = ({ onBackClick, onNextClick }) => {
 
         const agendas = Object.values(data).filter((c) => c.type === 'agenda');
 
-        return agendas.sort((a, b) => a.label.localeCompare(b.label));
+        return agendas.sort((a, b) => cardLabelDe(a).localeCompare(cardLabelDe(b), 'de'));
     }, [data]);
 
     const canSelectAgenda = (agendaCode) => {
