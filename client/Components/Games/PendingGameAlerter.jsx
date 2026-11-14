@@ -33,7 +33,7 @@ const PendingGameAlerter = ({ game, user }) => {
 
                     // Send browser notification, if able
                     if (window.Notification && Notification.permission === 'granted') {
-                        const windowNotification = new Notification('The Iron Throne', {
+                        const windowNotification = new Notification('Der Eiserne Thron', {
                             body: joinMessage,
                             icon: `/img/avatar/${newPlayer.username}.png`
                         });

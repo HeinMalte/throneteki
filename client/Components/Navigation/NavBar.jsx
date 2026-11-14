@@ -5,13 +5,11 @@ import ContextMenu from './ContextMenu';
 import ServerStatus from './ServerStatus';
 
 import SmallHeaderIcon from '../../assets/img/header_icon.png';
-import HeaderIcon from '../../assets/img/main_header_logo.png';
 import {
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownTrigger,
-    Image,
     Navbar,
     NavbarBrand,
     NavbarContent,
@@ -181,7 +179,7 @@ const NavBar = () => {
                             width='32'
                             height='32'
                             className='inline-block align-top'
-                            alt='The Iron Throne Logo'
+                            alt='Der Eiserne Thron'
                         />
                     </NavbarBrand>
                 </NavbarContent>
@@ -222,11 +220,13 @@ const NavBar = () => {
                 </NavbarContent>
                 <NavbarContent className='hidden lg:flex' justify='center'>
                     <NavbarBrand as={NavigationLink} href='/'>
-                        <Image
-                            src={currentGame?.started ? SmallHeaderIcon : HeaderIcon}
-                            style={{ height: '48px' }}
-                            alt='The Iron Throne Logo'
-                        />
+                        <span
+                            className={`got-wordmark whitespace-nowrap ${
+                                currentGame?.started ? 'text-lg' : 'text-2xl'
+                            }`}
+                        >
+                            Der Eiserne Thron
+                        </span>
                     </NavbarBrand>
                 </NavbarContent>
                 <NavbarContent className='hidden lg:flex' justify='end'>
