@@ -16,7 +16,7 @@ const Decks = () => {
 
     return (
         <Page>
-            <Panel title='Decks'>
+            <Panel title='Meine Decks'>
                 <div className='flex flex-col gap-2'>
                     <div className='flex gap-2'>
                         <FormatSelect
@@ -27,7 +27,7 @@ const Decks = () => {
                             className='basis-1/3'
                         />
                         <VariantSelect
-                            label='Variant'
+                            label='Variante'
                             format={format}
                             selected={variant}
                             onSelected={setVariant}
@@ -35,7 +35,7 @@ const Decks = () => {
                             className='basis-1/3'
                         />
                         <LegalitySelect
-                            label='Legality'
+                            label='Kartenpool-Stand'
                             format={format}
                             variant={variant}
                             selected={legality}

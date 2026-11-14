@@ -24,7 +24,7 @@ const ImportDeckModal = ({
     isLoading,
     message,
     placement = 'center',
-    submitLabel = 'Submit',
+    submitLabel = 'Übernehmen',
     ...modalProps
 }) => {
     const [deckText, setDeckText] = useState('');
@@ -40,13 +40,15 @@ const ImportDeckModal = ({
             <ModalContent>
                 {(onClose) => (
                     <>
-                        <ModalHeader className='flex flex-col gap-1'>Import Decklist</ModalHeader>
+                        <ModalHeader className='flex flex-col gap-1'>
+                            Deckliste importieren
+                        </ModalHeader>
                         <ModalBody>
                             <div className='flex flex-col gap-2'>
                                 {(isCardsError || isPacksError) && (
                                     <AlertPanel
                                         variant='danger'
-                                        message='An error occured loading the card data. Please try again later'
+                                        message='Die Kartendaten konnten nicht geladen werden. Bitte versuche es später noch einmal.'
                                     />
                                 )}
                                 {isCardsLoading || isPacksLoading ? (
@@ -65,11 +67,11 @@ const ImportDeckModal = ({
                                                 }}
                                                 isSelected={isDraftpool}
                                             >
-                                                {'Import as draft pool'}
+                                                {'Als Draft-Pool importieren'}
                                             </Switch>
                                             {isDraftpool && (
                                                 <Select
-                                                    label={'Game variant'}
+                                                    label={'Spielvariante'}
                                                     className='md:w-2/6'
                                                     onChange={(e) => setGameVariant(e.target.value)}
                                                     selectedKeys={new Set([gameVariant])}
@@ -86,28 +88,28 @@ const ImportDeckModal = ({
                                         </div>
                                         {isDraftpool ? (
                                             <span>
-                                                After building your deck on{' '}
+                                                Baue dein Deck auf{' '}
                                                 <Link href='https://draftmancer.com'>
                                                     Draftmancer
                                                 </Link>
-                                                , copy the list by clicking on{' '}
-                                                <strong>Export {'>'} Card Names</strong>, and paste
-                                                it below.
+                                                , kopiere die Liste über{' '}
+                                                <strong>Export {'>'} Card Names</strong> und füge
+                                                sie unten ein.
                                             </span>
                                         ) : (
                                             <span>
-                                                Open your deck on{' '}
+                                                Öffne dein Deck auf{' '}
                                                 <Link href='https://thronesdb.com'>ThronesDB</Link>,
-                                                copy the plain text export from{' '}
-                                                <strong>Actions {'>'} Plain Text</strong>, and paste
-                                                it below.
+                                                kopiere den Export über{' '}
+                                                <strong>Actions {'>'} Plain Text</strong> und füge
+                                                ihn unten ein.
                                             </span>
                                         )}
                                         <Textarea
                                             minRows={20}
                                             value={deckText}
                                             isDisabled={isProcessing || isLoading}
-                                            placeholder={'Paste your deck export here...'}
+                                            placeholder={'Deckliste hier einfügen …'}
                                             onValueChange={setDeckText}
                                         />
                                     </>
@@ -115,7 +117,7 @@ const ImportDeckModal = ({
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button onPress={onClose}>Close</Button>
+                            <Button onPress={onClose}>Schließen</Button>
                             <Button
                                 color='primary'
                                 isDisabled={deckText === ''}
@@ -133,7 +135,7 @@ const ImportDeckModal = ({
                                     );
                                     if (!deck) {
                                         toast.error(
-                                            'There was an error processing your deck. Please ensure you have pasted a plain text export from ThronesDB, card name export from Draftmancer, or a plain card list.'
+                                            'Die Deckliste konnte nicht gelesen werden. Füge bitte einen Klartext-Export von ThronesDB, einen Kartennamen-Export von Draftmancer oder eine einfache Kartenliste ein.'
                                         );
                                     } else {
                                         await onProcessed(deck);

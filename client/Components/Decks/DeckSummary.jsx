@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { CardTypePluralDe } from '../../i18n';
 import { cardLabelDe, cardNameDe } from '../../cardNamesDe';
 import { useGetCardsQuery } from '../../redux/middleware/api';
 import { sortBy } from 'underscore';
@@ -54,7 +55,7 @@ const DeckSummary = ({ className, deck }) => {
                     <div key={type} className='m-1'>
                         <ThronesIcon icon={type} className='me-1' />
                         <strong>
-                            {type[0].toUpperCase() + type.slice(1)} (
+                            {CardTypePluralDe[type] || type} (
                             {cards.reduce((acc, card) => acc + card.count, 0)})
                         </strong>
                     </div>
@@ -95,7 +96,7 @@ const DeckSummary = ({ className, deck }) => {
             {poolContainers && (
                 <>
                     <div className='my-4 border-t border-gray-300' />
-                    <label className='font-bold'>Draft Pool</label>
+                    <label className='font-bold'>Draft-Pool</label>
                     <div className={containerClass}>{poolContainers}</div>
                 </>
             )}

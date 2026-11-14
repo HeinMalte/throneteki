@@ -18,7 +18,7 @@ const AddDeck = () => {
     );
     return (
         <div>
-            <Panel title={'New Deck'}>
+            <Panel title={'Neues Deck'}>
                 {selectedFaction ? (
                     <div>
                         {selectedAgendas ? (
@@ -30,7 +30,7 @@ const AddDeck = () => {
                                     cards={cards}
                                     packs={packs}
                                     deck={{
-                                        name: 'New Deck',
+                                        name: 'Neues Deck',
                                         faction: selectedFaction,
                                         agenda: selectedAgendas[0],
                                         drawCards:

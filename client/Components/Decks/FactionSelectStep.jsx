@@ -14,7 +14,7 @@ const FactionSelectStep = ({ onSelect }) => {
         <>
             <div>
                 <div className='w-full text-center mt-5'>
-                    <h3 className='text-bold text-large'>To start, select a faction:</h3>
+                    <h3 className='text-bold text-large'>Wähle zuerst deine Fraktion:</h3>
                 </div>
             </div>
             <div className='grid grid-cols-3 lg:grid-cols-4 gap-8 my-8'>
@@ -28,7 +28,7 @@ const FactionSelectStep = ({ onSelect }) => {
             </div>
 
             <div className='flex justify-center'>
-                <Button onPress={() => dispatch(navigate('/decks'))}>Cancel</Button>
+                <Button onPress={() => dispatch(navigate('/decks'))}>Abbrechen</Button>
             </div>
         </>
     );

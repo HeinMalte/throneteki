@@ -4,10 +4,10 @@ import { faCheckCircle, faTimesCircle, faBan } from '@fortawesome/free-solid-svg
 
 const ServerStatus = ({ connecting, connected, responseTime, serverType }) => {
     const connectionStatus =
-        (connected && 'Connected') || (connecting && 'Connecting') || 'Disconnected';
+        (connected && 'verbunden') || (connecting && 'verbindet …') || 'getrennt';
     const connectionIcon = (connected && faCheckCircle) || (connecting && faTimesCircle) || faBan;
 
-    const toolTip = `${serverType} is ${connectionStatus}`;
+    const toolTip = `${serverType}: ${connectionStatus}`;
 
     const pingLevel = `text-medium text-${
         connected
@@ -20,7 +20,7 @@ const ServerStatus = ({ connecting, connected, responseTime, serverType }) => {
     }`;
 
     const pingText2 = `${serverType[0]}: ${
-        connected ? (responseTime ? `${responseTime}ms` : 'Waiting') : connectionStatus
+        connected ? (responseTime ? `${responseTime}ms` : 'wartet') : connectionStatus
     }`;
 
     return (

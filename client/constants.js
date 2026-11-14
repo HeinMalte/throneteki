@@ -6,13 +6,13 @@ export const ItemTypes = {
 export const GameFormats = [
     {
         name: 'joust',
-        label: 'Joust',
+        label: 'Tjost (2 Spieler)',
         defaultMaxPlayers: 2,
         variants: [{ name: 'standard', label: 'Standard' }]
     },
     {
         name: 'melee',
-        label: 'Melee',
+        label: 'Buhurt (3+ Spieler)',
         defaultMaxPlayers: 4,
         variants: [{ name: 'standard', label: 'Standard' }],
         experimental: true
@@ -27,9 +27,9 @@ export const GameFormats = [
 ];
 
 export const GameTypes = [
-    { name: 'beginner', label: 'Beginner' },
-    { name: 'casual', label: 'Casual' },
-    { name: 'competitive', label: 'Competitive' }
+    { name: 'beginner', label: 'Anfänger' },
+    { name: 'casual', label: 'Locker' },
+    { name: 'competitive', label: 'Wettkampf' }
 ];
 
 export const ThronesIcons = [

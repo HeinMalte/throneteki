@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { DeckStatusLabelsDe, translateDeckError } from '../../i18n';
 import DeckStatusSummary from './DeckStatusSummary';
 import { Chip, Divider, Tooltip } from '@heroui/react';
 import { deckStatusLabel } from './DeckHelper';
@@ -82,7 +83,8 @@ const DeckStatus = ({ className, showDeckDetails = true, compact = false, deck }
                     <span className={`text-${info.color} flex flex-row gap-1 items-center`}>
                         {info.icon}
                         <b>
-                            {info.label} ({variantLabel} {formatLabel})
+                            {DeckStatusLabelsDe[info.label] || info.label} ({variantLabel}{' '}
+                            {formatLabel})
                         </b>
                     </span>
                     <Divider />
@@ -92,7 +94,7 @@ const DeckStatus = ({ className, showDeckDetails = true, compact = false, deck }
                             {status.extendedStatus.map((error, index) => (
                                 <li key={index}>
                                     <Divider />
-                                    {error}
+                                    {translateDeckError(error)}
                                 </li>
                             ))}
                         </ul>
@@ -108,7 +110,9 @@ const DeckStatus = ({ className, showDeckDetails = true, compact = false, deck }
                 <Chip className={chipClass} color={info.color} radius='md'>
                     <div className='flex flex-row gap-1 items-center'>
                         <span>{info.icon}</span>
-                        <span className={labelClass}>{info.label}</span>
+                        <span className={labelClass}>
+                            {DeckStatusLabelsDe[info.label] || info.label}
+                        </span>
                     </div>
                 </Chip>
             </div>

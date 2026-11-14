@@ -158,7 +158,7 @@ const NavBar = () => {
 
     let numGames = games ? (
         <li className='font-[PoppinsMedium] text-white text-nowrap'>
-            <span>{`${games.length} Games`}</span>
+            <span>{`${games.length} ${games.length === 1 ? 'Spiel' : 'Spiele'}`}</span>
         </li>
     ) : null;
 
@@ -198,7 +198,7 @@ const NavBar = () => {
                         <ServerStatus
                             connected={gameConnected}
                             connecting={gameConnecting}
-                            serverType='Game server'
+                            serverType='Spielserver'
                             responseTime={gameResponse}
                         />
                     ) : (
@@ -241,7 +241,7 @@ const NavBar = () => {
                         <ServerStatus
                             connected={gameConnected}
                             connecting={gameConnecting}
-                            serverType='Game server'
+                            serverType='Spielserver'
                             responseTime={gameResponse}
                         />
                     ) : (

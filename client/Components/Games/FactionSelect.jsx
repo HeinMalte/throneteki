@@ -1,4 +1,5 @@
 import React from 'react';
+import { FactionNamesDe } from '../../i18n';
 import { Select, SelectItem } from '@heroui/react';
 import { Constants } from '../../constants';
 import ThronesIcon from '../GameBoard/ThronesIcon';
@@ -6,7 +7,7 @@ import ThronesIcon from '../GameBoard/ThronesIcon';
 const FactionSelect = ({
     className,
     style,
-    label = 'Faction',
+    label = 'Fraktion',
     selected,
     onSelected,
     isInvalid,
@@ -37,10 +38,14 @@ const FactionSelect = ({
             )}
         >
             {Constants.Factions.map((f) => (
-                <SelectItem key={f.value} value={f.value} textValue={f.name}>
+                <SelectItem
+                    key={f.value}
+                    value={f.value}
+                    textValue={FactionNamesDe[f.value] || f.name}
+                >
                     <div className='flex gap-2 items-center'>
                         <ThronesIcon icon={f.value} />
-                        <div>{f.name}</div>
+                        <div>{FactionNamesDe[f.value] || f.name}</div>
                     </div>
                 </SelectItem>
             ))}

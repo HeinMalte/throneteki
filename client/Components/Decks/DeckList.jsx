@@ -92,7 +92,7 @@ const DeckList = ({
                         <FactionFilter filter={factionFilter} setFilter={setFactionFilter} />
                     )
                 },
-                header: 'Faction',
+                header: 'Fraktion',
                 enableSorting: false
             },
             {
@@ -114,7 +114,7 @@ const DeckList = ({
 
                     const content =
                         agendas.length === 0 ? (
-                            <>None</>
+                            <>Keine</>
                         ) : (
                             agendas.map((code) => {
                                 return (
@@ -132,14 +132,14 @@ const DeckList = ({
                 meta: {
                     colWidth: '15%'
                 },
-                header: 'Agenda(s)',
+                header: 'Agenda',
                 enableColumnFilter: false,
                 enableSorting: false
             },
             {
                 accessorKey: 'lastUpdated',
                 cell: (info) => moment(info.getValue()).local().format('YYYY-MM-DD'),
-                header: 'Updated',
+                header: 'Geändert',
                 meta: {
                     colWidth: '15%',
                     className: 'max-lg:hidden'
@@ -155,7 +155,7 @@ const DeckList = ({
                         </div>
                     </div>
                 ),
-                header: 'Validity',
+                header: 'Status',
                 meta: {
                     colWidth: '5%'
                 },
@@ -174,13 +174,13 @@ const DeckList = ({
                     return (
                         <span
                             className='whitespace-nowrap tabular-nums'
-                            title={`${record.games} games with this deck`}
+                            title={`${record.games} Spiele mit diesem Deck`}
                         >
                             {record.wins}-{record.games - record.wins}
                         </span>
                     );
                 },
-                header: 'Record',
+                header: 'Bilanz',
                 meta: {
                     colWidth: '8%',
                     className: 'max-md:hidden'
@@ -207,7 +207,7 @@ const DeckList = ({
                         <FontAwesomeIcon icon={info.getValue() ? faHeart : faHeartRegular} />
                     </div>
                 ),
-                header: 'Favourite',
+                header: 'Favorit',
                 meta: {
                     colWidth: '5%',
                     className: 'max-sm:hidden'
@@ -223,19 +223,19 @@ const DeckList = ({
               {
                   color: 'default',
                   icon: <FontAwesomeIcon icon={faFileCirclePlus} />,
-                  label: 'New',
+                  label: 'Neues Deck',
                   onPress: () => dispatch(navigate('/decks/new'))
               },
               {
                   color: 'default',
                   icon: <FontAwesomeIcon icon={faDownload} />,
-                  label: 'Import',
+                  label: 'Importieren',
                   onPress: () => setShowImportModal(true)
               },
               {
                   color: 'danger',
                   icon: <FontAwesomeIcon icon={faTrashAlt} />,
-                  label: 'Delete',
+                  label: 'Löschen',
                   disabled: selectedIds.length === 0 || isLockedDeckSelected,
                   isLoading: isDeleteLoading,
                   onPress: () => setShowConfirm(true)
@@ -282,7 +282,7 @@ const DeckList = ({
             />
             <ConfirmDialog
                 isOpen={showConfirm}
-                message={`Are you sure you want to delete ${selectedIds.length === 1 ? 'this deck' : 'these decks'}?`}
+                message={`Möchtest du ${selectedIds.length === 1 ? 'dieses Deck' : 'diese Decks'} wirklich löschen?`}
                 onOpenChange={setShowConfirm}
                 onCancel={() => setShowConfirm(false)}
                 onOk={async () => {
@@ -293,9 +293,11 @@ const DeckList = ({
                         setSelectedIds([]);
                         setIsLockedDeckSelected(false);
 
-                        toast.success('Deck(s) deleted successfully');
+                        toast.success('Gelöscht.');
                     } catch (err) {
-                        toast.error(err.data?.message || 'An error occurred deleting decks');
+                        toast.error(
+                            err.data?.message || 'Die Decks konnten nicht gelöscht werden.'
+                        );
                     }
                 }}
             />
@@ -308,9 +310,9 @@ const DeckList = ({
 
                         setShowImportModal(false);
 
-                        toast.success('Deck imported successfully');
+                        toast.success('Deck importiert.');
                     } catch (err) {
-                        toast.error('An error occurred while importing deck');
+                        toast.error('Das Deck konnte nicht importiert werden.');
                     }
                 }}
                 isLoading={isAddLoading}

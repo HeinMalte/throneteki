@@ -6,7 +6,7 @@ import { useEffect, useMemo } from 'react';
 const VariantSelect = ({
     className,
     style,
-    label = 'Variant',
+    label = 'Variante',
     format,
     selected,
     onSelected,

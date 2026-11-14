@@ -21,10 +21,10 @@ import Page from './Page';
 import { keyboardShortcutsEnabled } from '../Components/GameBoard/keyboardShortcuts';
 
 const backgrounds = [
-    { name: 'none', label: 'None', imageUrl: BlankBg },
+    { name: 'none', label: 'Kein Hintergrund', imageUrl: BlankBg },
     { name: 'BG1', label: 'Standard', imageUrl: Background1 },
     { name: 'BG2', label: 'Winter', imageUrl: Background2 },
-    { name: 'GOT', label: 'Throne Room', imageUrl: ThroneRoomBg }
+    { name: 'GOT', label: 'Thronsaal', imageUrl: ThroneRoomBg }
 ];
 
 const defaultActionWindows = {
@@ -58,7 +58,8 @@ const Profile = () => {
     useEffect(() => {
         if (saveError) {
             toast.error(
-                saveError.message || 'An error occured saving your profile. Please try again later.'
+                saveError.message ||
+                    'Die Einstellungen konnten nicht gespeichert werden. Bitte versuche es später noch einmal.'
             );
         }
     }, [saveError]);
@@ -69,12 +70,15 @@ const Profile = () => {
 
     if (!user) {
         return (
-            <AlertPanel variant='error' message='You must be logged in to update your profile' />
+            <AlertPanel
+                variant='error'
+                message='Bitte melde dich an, um deine Einstellungen zu ändern.'
+            />
         );
     }
 
     if (isLoadingUser) {
-        return <p className='py-6 text-center'>Loading...</p>;
+        return <p className='py-6 text-center'>Wird geladen …</p>;
     }
 
     const schema = yup.object({
@@ -103,13 +107,13 @@ const Profile = () => {
         //     ),
         email: yup
             .string()
-            .email('Please enter a valid email address')
-            .required('You must specify an email address'),
+            .email('Bitte gib eine gültige E-Mail-Adresse ein')
+            .required('Bitte gib eine E-Mail-Adresse ein'),
         currentPassword: yup.string(),
-        password: yup.string().min(6, 'Password must be at least 6 characters'),
+        password: yup.string().min(6, 'Das Passwort muss mindestens 6 Zeichen haben'),
         passwordAgain: yup
             .string()
-            .oneOf([yup.ref('password'), null], 'The passwords you have entered do not match')
+            .oneOf([yup.ref('password'), null], 'Die Passwörter stimmen nicht überein')
     });
 
     const settings = user.settings || {};
@@ -166,7 +170,7 @@ const Profile = () => {
                                 }
                             }
                         }).unwrap();
-                        toast.success('Profile saved successfully');
+                        toast.success('Einstellungen gespeichert.');
 
                         dispatch(setUser(ret.data?.user ?? ret.user));
                         if (ret.data?.token && ret.data?.refreshToken) {
@@ -176,18 +180,16 @@ const Profile = () => {
                         toast.error(
                             err.data?.message ||
                                 err.message ||
-                                'An error occured saving your profile. Please try again later.'
+                                'Die Einstellungen konnten nicht gespeichert werden. Bitte versuche es später noch einmal.'
                         );
                     }
                 }}
             >
                 {(formProps) => (
                     <form onSubmit={formProps.handleSubmit} className='flex flex-col gap-2'>
-                        <ProfileMain user={user} formProps={formProps} />
-                        <ActionWindowOptions formProps={formProps} />
                         <GameSettings formProps={formProps} />
                         <CardSizeSettings user={user} formProps={formProps} />
-                        <Panel title='Game Board Background'>
+                        <Panel title='Hintergrund des Spieltischs'>
                             <div className='grid sm:grid-cols-3 gap-2'>
                                 {backgrounds.map((background) => (
                                     <GameBackgroundOption
@@ -201,6 +203,8 @@ const Profile = () => {
                                 ))}
                             </div>
                         </Panel>
+                        <ActionWindowOptions formProps={formProps} />
+                        <ProfileMain user={user} formProps={formProps} />
                         <div className='w-full sticky bottom-6 z-50 mt-2 flex justify-center'>
                             <Button
                                 className='w-1/2'
@@ -208,7 +212,7 @@ const Profile = () => {
                                 type='submit'
                                 isLoading={isSaveLoading}
                             >
-                                Save
+                                Einstellungen speichern
                             </Button>
                         </div>
                     </form>

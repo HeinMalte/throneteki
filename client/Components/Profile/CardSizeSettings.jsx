@@ -5,15 +5,15 @@ import CardImage from '../Images/CardImage';
 
 export const allowedCardSizes = [
     // { name: 'auto', label: 'Auto' },
-    { name: 'small', label: 'Small' },
+    { name: 'small', label: 'Klein' },
     { name: 'normal', label: 'Normal' },
-    { name: 'large', label: 'Large' },
-    { name: 'x-large', label: 'Extra-Large' }
+    { name: 'large', label: 'Groß' },
+    { name: 'x-large', label: 'Sehr groß' }
 ];
 
 const CardSizeSettings = ({ formProps }) => {
     return (
-        <Panel title='Card Image Size'>
+        <Panel title='Kartengröße im Spiel'>
             <div className='flex gap-2'>
                 <RadioGroup
                     value={formProps.values.cardSize}

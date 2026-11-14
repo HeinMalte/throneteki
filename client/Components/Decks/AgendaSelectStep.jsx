@@ -43,25 +43,30 @@ const AgendaSelectStep = ({ onBackClick, onNextClick }) => {
     } else if (isError) {
         return (
             <AlertPanel variant='danger'>
-                An error occurred loading data from the server. Please try again later.
+                Die Daten konnten nicht geladen werden. Bitte versuche es später noch einmal.
             </AlertPanel>
         );
     }
 
     return (
         <>
-            <div className='mb-2'>
-                <Button color='default' className='mr-2' onPress={() => onBackClick()}>
-                    Back
+            <div className='mb-2 flex flex-wrap items-center gap-3'>
+                <Button color='default' onPress={() => onBackClick()}>
+                    Zurück
                 </Button>
                 <Button color='primary' onPress={() => onNextClick(selectedAgendas)}>
-                    Next
+                    {selectedAgendas.length > 0 ? 'Weiter' : 'Ohne Agenda weiter'}
                 </Button>
+                <span className='text-sm text-default-500'>
+                    Wähle eine Agenda (optional). Mit der Agenda „Allianz“ kannst du zusätzlich bis
+                    zu 2 Banner wählen.
+                </span>
             </div>
             <div className='grid h-[75vh] grid-cols-3 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 overflow-y-auto'>
                 {agendas.map((agenda) => (
                     <div key={agenda.code} className='m-2 flex content-center'>
                         <div
+                            className='flex w-min flex-col items-center'
                             role={canSelectAgenda(agenda.code) ? 'button' : undefined}
                             onPointerDown={() => {
                                 if (!canSelectAgenda(agenda.code)) {
@@ -89,6 +94,9 @@ const AgendaSelectStep = ({ onBackClick, onNextClick }) => {
                                     }
                                 />
                             </CardHoverable>
+                            <div className='mt-1 w-full text-center text-xs leading-tight text-default-600'>
+                                {cardLabelDe(agenda)}
+                            </div>
                         </div>
                     </div>
                 ))}

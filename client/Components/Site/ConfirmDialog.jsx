@@ -4,7 +4,7 @@ import React from 'react';
 const ConfirmDialog = ({
     isOpen,
     onOpenChange,
-    title = 'Are you sure?',
+    title = 'Bist du sicher?',
     message,
     onOk,
     onCancel,
@@ -28,7 +28,7 @@ const ConfirmDialog = ({
                                     }
                                 }}
                             >
-                                Yes
+                                Ja
                             </Button>
                             <Button
                                 onPress={(e) => {
@@ -38,7 +38,7 @@ const ConfirmDialog = ({
                                     }
                                 }}
                             >
-                                No
+                                Nein
                             </Button>
                         </ModalFooter>
                     </>

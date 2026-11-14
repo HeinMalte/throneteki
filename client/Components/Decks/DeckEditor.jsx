@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { translateDeckError } from '../../i18n';
 import { cardLabelDe, matchesCardName } from '../../cardNamesDe';
 
 import { BannersForFaction, Constants } from '../../constants';
@@ -47,6 +48,25 @@ const SmallButton = extendVariants(Button, {
         }
     }
 });
+
+const DeckCounter = ({ label, count, target, exact = false }) => {
+    const done = target === undefined || (exact ? count === target : count >= target);
+    return (
+        <div
+            className={`flex flex-col rounded-lg border px-3 py-1.5 ${
+                done ? 'border-success-500 text-success-400' : 'border-default-400'
+            }`}
+        >
+            <span className='text-xl font-bold leading-tight'>
+                {count}
+                {target !== undefined && (
+                    <span className='text-sm font-normal text-default-500'> / {target}</span>
+                )}
+            </span>
+            <span className='text-xs text-default-500'>{label}</span>
+        </div>
+    );
+};
 
 const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
     const deck = useMemo(() => formatDeckAsFullCards(initial, { cards }), [cards, initial]);
@@ -204,7 +224,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                 id: 'C/I',
                 accessorFn: (row) =>
                     row.income != undefined ? row.income : row.cost != undefined ? row.cost : '',
-                header: 'C/I',
+                header: 'Kosten',
                 meta: {
                     colWidth: '10%',
                     className: 'max-sm:hidden'
@@ -219,7 +239,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                         : row.strength != undefined
                           ? row.strength
                           : '',
-                header: 'S/I',
+                header: 'Stärke',
                 meta: {
                     colWidth: '10%',
                     className: 'max-sm:hidden'
@@ -228,7 +248,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
             },
             {
                 accessorKey: 'type',
-                header: 'T',
+                header: 'Typ',
                 cell: (info) => (
                     <ThronesIcon icon={info.getValue()} color={info.row.original.faction} />
                 ),
@@ -241,7 +261,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
             {
                 id: 'faction',
                 accessorKey: 'faction',
-                header: 'F',
+                header: 'Fraktion',
                 cell: (info) => <ThronesIcon icon={info.getValue()} />,
                 filterFn: 'arrIncludesSome',
                 meta: {
@@ -255,7 +275,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     const deckCard = deckCards.find((dc) => dc.card.code === row.code);
                     return deckCard?.count || 0;
                 },
-                header: 'Qty',
+                header: 'Anzahl',
                 cell: (info) => {
                     const max = info.row.original.deckLimit + 1;
                     const deckCard = deckCards.find(
@@ -301,7 +321,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                                 defaultSelectedKeys={['0']}
                                 selectedKeys={[count.toString()]}
                                 classNames={{ trigger: 'h-8 min-h-8' }}
-                                aria-label='Qty'
+                                aria-label='Anzahl'
                             >
                                 {[...Array(max).keys()].map((digit) => (
                                     <SelectItem key={digit.toString()} textValue={digit.toString()}>
@@ -368,7 +388,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                 ? await saveDeck(savingDeck).unwrap()
                 : await addDeck(savingDeck).unwrap();
 
-            toast.success(`Deck ${savingDeck._id ? 'saved' : 'added'} successfully.`);
+            toast.success(`Deck ${savingDeck._id ? 'gespeichert' : 'angelegt'}.`);
 
             if (andClose) {
                 dispatch(navigate('/decks'));
@@ -376,7 +396,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
             return true;
         } catch (err) {
             toast.error(
-                `An error occured ${savingDeck._id ? 'saving' : 'adding'}  the deck. Please try again later`
+                'Das Deck konnte nicht gespeichert werden. Bitte versuche es später noch einmal.'
             );
         }
         return false;
@@ -386,7 +406,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
         <div className='flex flex-col gap-3'>
             <div className='flex flex-wrap gap-2'>
                 <Button color='default' onPress={() => onBackClick()}>
-                    Back
+                    Zurück
                 </Button>
                 <Button
                     color='primary'
@@ -394,7 +414,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     isDisabled={deck.locked}
                     onPress={() => onSaveClick(true)}
                 >
-                    Save & Close
+                    Speichern & schließen
                 </Button>
                 <Button
                     color='primary'
@@ -402,10 +422,10 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     isDisabled={deck.locked}
                     onPress={() => onSaveClick(false)}
                 >
-                    Save
+                    Speichern
                 </Button>
                 <Button onPress={() => setShowImportModal(true)} isDisabled={deck.locked}>
-                    Import
+                    Deckliste importieren
                 </Button>
             </div>
             <div className='columns-1 xl:columns-2 gap-4'>
@@ -413,15 +433,15 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     <div className='flex gap-2'>
                         <Input
                             className='md:basis-2/3'
-                            placeholder='Enter a name'
+                            placeholder='Name für dein Deck'
                             value={deckName}
                             onValueChange={setDeckName}
-                            label='Deck Name'
+                            label='Deckname'
                             isDisabled={deck.locked}
                         />
                         <FactionSelect
                             className='md:basis-1/3'
-                            label='Faction'
+                            label='Fraktion'
                             selected={faction}
                             onSelected={setFaction}
                             disallowEmptySelection
@@ -438,7 +458,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                             className='md:basis-1/3'
                         />
                         <VariantSelect
-                            label='Variant'
+                            label='Variante'
                             format={gameFormat}
                             selected={gameVariant}
                             onSelected={setGameVariant}
@@ -447,7 +467,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                             className='md:basis-1/3'
                         />
                         <LegalitySelect
-                            label='Legality'
+                            label='Kartenpool-Stand'
                             format={gameFormat}
                             variant={gameVariant}
                             selected={gameLegality}
@@ -461,47 +481,46 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     </div>
                     <Card>
                         {deckToSave ? (
-                            <CardBody>
-                                <div className='flex gap-4'>
-                                    <div>
-                                        <div className='space-x-1'>
-                                            <span className='font-bold'>Plot cards:</span>
-                                            <span>
-                                                {deckToSave.plotCards.reduce(
-                                                    (acc, card) => acc + card.count,
-                                                    0
-                                                )}
-                                            </span>
-                                        </div>
-                                        <div className='space-x-1'>
-                                            <span className='font-bold'>Draw cards:</span>
-                                            <span>
-                                                {deckToSave.drawCards.reduce(
-                                                    (acc, card) => acc + card.count,
-                                                    0
-                                                )}
-                                            </span>
-                                        </div>
-                                        {!!deck.pool && (
-                                            <div className='space-x-1'>
-                                                <span className='font-bold'>Cards in pool:</span>
-                                                <span>
-                                                    {deck.pool.reduce(
-                                                        (acc, card) => acc + card.count,
-                                                        0
-                                                    )}
-                                                </span>
-                                            </div>
+                            <CardBody className='flex flex-col gap-3'>
+                                <div className='flex flex-wrap items-center gap-3'>
+                                    <DeckCounter
+                                        label='Strategiestapel'
+                                        count={deckToSave.plotCards.reduce(
+                                            (acc, card) => acc + card.count,
+                                            0
                                         )}
-                                    </div>
-                                    <div className='space-y-1'>
-                                        <div className='font-bold'>Validity:</div>
-                                        <div className='flex gap-1'>
-                                            <DeckStatus deck={deckToSave} />
-                                            <PoolInfo isPool={!!deck.pool} />
-                                        </div>
+                                        target={7}
+                                        exact
+                                    />
+                                    <DeckCounter
+                                        label='Nachziehstapel'
+                                        count={deckToSave.drawCards.reduce(
+                                            (acc, card) => acc + card.count,
+                                            0
+                                        )}
+                                        target={60}
+                                    />
+                                    {!!deck.pool && (
+                                        <DeckCounter
+                                            label='Karten im Pool'
+                                            count={deck.pool.reduce(
+                                                (acc, card) => acc + card.count,
+                                                0
+                                            )}
+                                        />
+                                    )}
+                                    <div className='flex items-center gap-1'>
+                                        <DeckStatus deck={deckToSave} />
+                                        <PoolInfo isPool={!!deck.pool} />
                                     </div>
                                 </div>
+                                {deckToSave.status?.extendedStatus?.length > 0 && (
+                                    <ul className='flex flex-col gap-1 text-sm text-danger-400'>
+                                        {deckToSave.status.extendedStatus.map((error, index) => (
+                                            <li key={index}>• {translateDeckError(error)}</li>
+                                        ))}
+                                    </ul>
+                                )}
                             </CardBody>
                         ) : (
                             <LoadingSpinner />
@@ -509,24 +528,30 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     </Card>
                     {!deck.locked ? (
                         <>
-                            <div className='flex flex-wrap gap-2'>
-                                <CardTypeFilter
-                                    className='self-start'
-                                    filter={typeFilter}
-                                    setFilter={setTypeFilter}
-                                    types={Constants.CardTypes.filter(
-                                        ({ value }) => value !== 'title'
-                                    )}
-                                />
-                                <FactionFilter
-                                    className='self-start'
-                                    filter={factionFilter}
-                                    setFilter={setFactionFilter}
-                                    factions={Constants.Factions.concat({
-                                        name: 'Neutral',
-                                        value: 'neutral'
-                                    })}
-                                />
+                            <div className='flex flex-wrap items-end gap-4'>
+                                <div className='flex flex-col gap-1'>
+                                    <span className='text-xs text-default-500'>Kartentyp</span>
+                                    <CardTypeFilter
+                                        className='self-start'
+                                        filter={typeFilter}
+                                        setFilter={setTypeFilter}
+                                        types={Constants.CardTypes.filter(
+                                            ({ value }) => value !== 'title'
+                                        )}
+                                    />
+                                </div>
+                                <div className='flex flex-col gap-1'>
+                                    <span className='text-xs text-default-500'>Fraktion</span>
+                                    <FactionFilter
+                                        className='self-start'
+                                        filter={factionFilter}
+                                        setFilter={setFactionFilter}
+                                        factions={Constants.Factions.concat({
+                                            name: 'Neutral',
+                                            value: 'neutral'
+                                        })}
+                                    />
+                                </div>
                             </div>
                             <div className='min-h-96 h-[50vh]'>
                                 <ReactTable
@@ -561,14 +586,14 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                             variant='warning'
                             title={
                                 <span>
-                                    <FontAwesomeIcon icon={faLock} /> Deck Locked
+                                    <FontAwesomeIcon icon={faLock} /> Deck gesperrt
                                 </span>
                             }
                             size='md'
                         >
-                            This deck has been used/locked for{' '}
-                            {lockedEvent ? <b>{lockedEvent.name}</b> : 'an event'}, and cannot be
-                            edited or deleted.
+                            Dieses Deck wurde für{' '}
+                            {lockedEvent ? <b>{lockedEvent.name}</b> : 'ein Turnier'} gesperrt und
+                            kann nicht mehr bearbeitet oder gelöscht werden.
                         </AlertPanel>
                     )}
                 </div>
@@ -585,7 +610,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                 <ImportDeckModal
                     isOpen={showImportModal}
                     onOpenChange={(open) => setShowImportModal(open)}
-                    submitLabel='Submit & Save'
+                    submitLabel='Übernehmen & speichern'
                     onProcessed={async (newDeck) => {
                         newDeck._id = deck._id;
                         const success = await onSaveClick(false, newDeck);
@@ -613,7 +638,7 @@ const DeckEditor = ({ deck: initial, cards, packs, onBackClick }) => {
                     }}
                     message={
                         <p className='text-bold text-danger-300'>
-                            Note: The deck you are editing will be overwritten!
+                            Achtung: Das aktuelle Deck wird dabei überschrieben!
                         </p>
                     }
                 />

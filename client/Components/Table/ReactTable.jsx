@@ -67,7 +67,7 @@ function ReactTable({
     const tableRef = useRef(null);
     const [pagination, setPagination] = useState({
         pageIndex: startPageNumber,
-        pageSize: 10
+        pageSize: 25
     });
     const [sorting, setSorting] = useState(defaultSort);
     const [columnFilters, setColumnFilters] = useState([]);
@@ -192,7 +192,9 @@ function ReactTable({
     if (isLoading) {
         return <LoadingSpinner />;
     } else if (isError) {
-        return <AlertPanel variant='danger'>{'An error occurred loading data.'}</AlertPanel>;
+        return (
+            <AlertPanel variant='danger'>{'Die Daten konnten nicht geladen werden.'}</AlertPanel>
+        );
     }
 
     const currPage = table.getState().pagination.pageIndex + 1;
@@ -217,7 +219,7 @@ function ReactTable({
                     disallowEmptySelection
                     selectedKeys={new Set([table.getState().pagination.pageSize.toString()])}
                     classNames={{ base: 'sm:order-first', trigger: 'h-9' }}
-                    aria-label='Page Select'
+                    aria-label='Einträge pro Seite'
                 >
                     {[10, 25, 50].map((pageSize) => (
                         <SelectItem key={pageSize.toString()} value={pageSize}>
@@ -226,7 +228,7 @@ function ReactTable({
                     ))}
                 </Select>
                 <span className='w-52 sm:w-full'>
-                    Page {currPage} of {pageCount} ({totalCount} items)
+                    Seite {currPage} von {pageCount} ({totalCount} Einträge)
                 </span>
             </div>
         </div>
@@ -351,11 +353,11 @@ function ReactTable({
                 </TableHeader>
                 <TableBody
                     isLoading={isLoading}
-                    loadingContent={<LoadingSpinner label='Loading data...' />}
+                    loadingContent={<LoadingSpinner label='Wird geladen …' />}
                     emptyContent={
                         emptyContent || (
                             <AlertPanel variant={AlertType.Info}>
-                                {'There is no data to display'}
+                                {'Keine Einträge gefunden'}
                             </AlertPanel>
                         )
                     }

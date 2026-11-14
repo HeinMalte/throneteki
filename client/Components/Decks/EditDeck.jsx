@@ -33,11 +33,11 @@ const EditDeckPage = ({ deckId }) => {
     let content;
 
     if (isLoading) {
-        content = <LoadingSpinner label={'Loading deck...'} />;
+        content = <LoadingSpinner label={'Deck wird geladen …'} />;
     } else if (isError) {
         content = (
             <AlertPanel variant='danger'>
-                An error occured loading your deck. Please try again later.
+                Dein Deck konnte nicht geladen werden. Bitte versuche es später noch einmal.
             </AlertPanel>
         );
     } else {

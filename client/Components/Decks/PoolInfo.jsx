@@ -8,7 +8,7 @@ const PoolInfo = ({ className, compact = false, isPool = false }) => {
     const [pointerType, setPointerType] = useState(false);
 
     const info = {
-        label: 'Limited',
+        label: 'Draft-Pool',
         icon: <FontAwesomeIcon icon={faExclamationCircle} />,
         color: 'warning'
     };

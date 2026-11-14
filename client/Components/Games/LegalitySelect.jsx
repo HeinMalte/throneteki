@@ -6,7 +6,7 @@ import { useGetRestrictedListQuery } from '../../redux/middleware/api';
 const LegalitySelect = ({
     className,
     style,
-    label = 'Legality',
+    label = 'Kartenpool-Stand',
     format,
     variant,
     selected,
@@ -37,9 +37,9 @@ const LegalitySelect = ({
             (rl) => rl.format === format && rl.variant === variant && rl.active
         );
         return [
-            ...(allowCustom ? [{ _id: 'custom', label: 'Custom' }] : []),
+            ...(allowCustom ? [{ _id: 'custom', label: 'Eigene' }] : []),
             ...(latestActive
-                ? [{ _id: 'latest', label: 'Latest', description: latestActive.version }]
+                ? [{ _id: 'latest', label: 'Aktuell', description: latestActive.version }]
                 : []),
             ...(data
                 .filter((rl) => rl.format === format && rl.variant === variant)

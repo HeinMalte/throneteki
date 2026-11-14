@@ -1,12 +1,12 @@
 export const LeftMenu = [
     { path: '/decks', title: 'Decks', showOnlyWhenLoggedIn: true },
-    { path: '/play', title: 'Play' },
+    { path: '/play', title: 'Spielen' },
     {
-        title: 'Help',
+        title: 'Hilfe',
         childItems: [
-            { path: '/how-to-play', title: 'How To Play' },
-            { path: '/about', title: 'About' },
-            { path: '/privacy', title: 'Privacy Policy' }
+            { path: '/how-to-play', title: 'Spielanleitung' },
+            { path: '/about', title: 'Über' },
+            { path: '/privacy', title: 'Datenschutz' }
         ]
     },
     {
@@ -29,14 +29,14 @@ export const LeftMenu = [
 ];
 
 export const RightMenu = [
-    { path: '/login', title: 'Login', showOnlyWhenLoggedOut: true },
-    { path: '/register', title: 'Register', showOnlyWhenLoggedOut: true }
+    { path: '/login', title: 'Anmelden', showOnlyWhenLoggedOut: true },
+    { path: '/register', title: 'Registrieren', showOnlyWhenLoggedOut: true }
 ];
 
 export const ProfileMenu = [
-    { title: 'Profile', path: '/profile' },
-    { title: 'Stats', path: '/stats' },
-    { title: 'Security', path: '/security' },
-    { title: 'Block List', path: '/blocklist' },
-    { title: 'Logout', path: '/logout' }
+    { title: 'Profil & Einstellungen', path: '/profile' },
+    { title: 'Statistiken', path: '/stats' },
+    { title: 'Sicherheit', path: '/security' },
+    { title: 'Blockierte Spieler', path: '/blocklist' },
+    { title: 'Abmelden', path: '/logout' }
 ];
